@@ -27,7 +27,7 @@ vim.g.rustaceanvim = {
   -- LSP configuration
   server = {
     on_attach = function(client, bufnr)
-      vim.lsp.inlay_hint.enable(bufnr, true)
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
       if vim.g.lsp_on_attach ~= nil then
         vim.g.lsp_on_attach(client, bufnr)
       end
@@ -37,18 +37,18 @@ vim.g.rustaceanvim = {
     },
   },
   -- DAP configuration
-  dap = {
-  },
+  dap = {},
 }
 
 return {
-  { "tpope/vim-surround" },
+  { 'tpope/vim-surround' },
   {
-    "mrcjkb/rustaceanvim",
-    version = '^3',
+    'mrcjkb/rustaceanvim',
+    version = '^4',
     ft = { 'rust' },
+    lazy = false,
     dependencies = {
-      "nvim-telescope/telescope.nvim",
+      'nvim-telescope/telescope.nvim',
     },
     -- opts = {
     --   -- Plugin configuration
@@ -70,29 +70,31 @@ return {
     -- },
   },
   {
-    "Saecki/crates.nvim",
-    event = { "BufRead Cargo.toml" },
+    'Saecki/crates.nvim',
+    event = { 'BufRead Cargo.toml' },
     init = function()
-      vim.api.nvim_create_autocmd("BufRead", {
-        group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
-        pattern = "Cargo.toml",
+      vim.api.nvim_create_autocmd('BufRead', {
+        group = vim.api.nvim_create_augroup('CmpSourceCargo', { clear = true }),
+        pattern = 'Cargo.toml',
         callback = function()
-          require("cmp").setup.buffer { sources = { { name = "crates" } } }
-          require "crates"
+          require('cmp').setup.buffer { sources = { { name = 'crates' } } }
+          require 'crates'
         end,
       })
     end,
     opts = {
       null_ls = {
         enabled = true,
-        name = "crates.nvim",
+        name = 'crates.nvim',
       },
     },
   },
   {
-    "ray-x/lsp_signature.nvim",
-    event = "VeryLazy",
+    'ray-x/lsp_signature.nvim',
+    event = 'VeryLazy',
     opts = {},
-    config = function(_, opts) require 'lsp_signature'.setup(opts) end
-  }
+    config = function(_, opts)
+      require('lsp_signature').setup(opts)
+    end,
+  },
 }
