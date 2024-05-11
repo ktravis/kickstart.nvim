@@ -40,10 +40,10 @@ vim.o.hlsearch = true
 
 vim.o.scrolloff = 3
 
-require "lsp_signature".setup({
-  hint_prefix = "",
+require('lsp_signature').setup {
+  hint_prefix = '',
   floating_window = false,
   bind = true,
-})
+}
 
-require 'mappings'
+require 'custom.mappings'
